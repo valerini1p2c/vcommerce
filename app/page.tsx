@@ -1,6 +1,5 @@
-import { Storefront } from "@/components/storefront/Storefront";
-import { demoProducts } from "@/lib/demo-products";
+import { LandingPage } from "./landing-page";
 
 export default function Home() {
-  return <Storefront products={demoProducts} />;
+  return <LandingPage />;
 }
