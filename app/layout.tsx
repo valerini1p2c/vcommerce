@@ -1,58 +1,58 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import "./globals.css";
 
-const title = "DROP/LAB — Premium Streetwear";
-const description =
-  "Streetwear premium com silhuetas amplas, materiais densos e uma curadoria contemporânea de roupas, acessórios e sneakers.";
+const siteUrl = "https://brito-suyama-advocacia.vercel.app";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host =
-    requestHeaders.get("x-forwarded-host") ??
-    requestHeaders.get("host") ??
-    "localhost:3000";
-  const protocol =
-    requestHeaders.get("x-forwarded-proto") ??
-    (host.startsWith("localhost") ? "http" : "https");
-  const metadataBase = new URL(`${protocol}://${host}`);
-  const socialImage = new URL("/og.png", metadataBase).toString();
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title: "Brito & Suyama Advocacia | Advogados em Itanhaém",
+  description:
+    "Atuação em Direito Cível, Trabalhista e Previdenciário, com orientação clara e atendimento profissional em Itanhaém e região.",
+  keywords: [
+    "advogado em Itanhaém",
+    "advocacia Itanhaém",
+    "direito cível Itanhaém",
+    "direito trabalhista Itanhaém",
+    "direito previdenciário Itanhaém",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    url: siteUrl,
+    siteName: "Brito & Suyama Advocacia",
+    title: "Brito & Suyama Advocacia",
+    description: "Ética, excelência e atendimento próximo em Itanhaém.",
+  },
+};
 
-  return {
-    metadataBase,
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      type: "website",
-      locale: "pt_BR",
-      images: [
-        {
-          url: socialImage,
-          width: 1200,
-          height: 630,
-          alt: "DROP/LAB — Premium Streetwear",
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [socialImage],
-    },
-  };
-}
+const legalBusiness = {
+  "@context": "https://schema.org",
+  "@type": "LegalService",
+  name: "Brito & Suyama Advocacia",
+  description: "Escritório de advocacia com atuação nas áreas Cível, Trabalhista e Previdenciária.",
+  telephone: "+55 13 99681-6741",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Av. Walter Miranda, 2590 — Jardim Tropical",
+    addressLocality: "Itanhaém",
+    addressRegion: "SP",
+    postalCode: "11740-000",
+    addressCountry: "BR",
+  },
+  areaServed: "Itanhaém e região",
+};
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" className="h-full antialiased">
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="pt-BR">
+      <body>
+        {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(legalBusiness) }}
+        />
+      </body>
     </html>
   );
 }
